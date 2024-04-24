@@ -1,9 +1,24 @@
 # Cisco Packet Tracer
 
+- [Show Komutları](#Show-Komutları)
+- [Switchlere İsim Vermek](#Switchlere-İsim-Vermek)
+- [Router Aktif Etme](#Router-Aktif-Etme)
+- [Router'a Yol Öğretme](#Router'a-Yol-Öğretme)
+- [Vlan Oluşturma](#Vlan-Oluşturma)
+- [Cost Ayarlaması Yapmak](#Cost-Ayarlaması-Yapmak)
+- [Router Sıfırlama](#Router-Sıfırlama)
+- [OSPF](#OSPF)
+- [EtherChannel](#EtherChannel)
+- [Vlan'ı Trunk Yapmak](#Vlan'ı-Trunk-Yapmak)
+- [Subınterface](#Subınterface)
+
+
+
+
 - PC'lere IP'yi statik olarak arayüzden verebiliriz
 - Komutun başına "no" ekleyerek iptal edebiliriz
 
-#### Show Komutları
+### Show Komutları
 
 ```
 show vlan: ile vlanları ve bağlı portları görebiliriz
@@ -13,13 +28,13 @@ show history: Geçmiş komutları listeler
 show interface: Arayüzleri gösterir
 ```
 
-#### Switchlere İsim Vermek
+### Switchlere İsim Vermek
 
 ```
 conf t
 hostname SW2 (switch'in ismini SW2 olarak değiştirir)
 ```
-#### Router Aktif Etme
+### Router Aktif Etme
 
 - Router içine giriyoruz
 - Conf
@@ -41,7 +56,7 @@ no shutdown
 - Physical
 - Router'ı kapatıp HWIC-2T ekliyoruz
 
-#### Router'a Yol Öğretme
+### Router'a Yol Öğretme
 
 Örneğin R1 ve R2 iki adet router'ımız var. R1'in iç ağındaki PC1'in R2'de bulunan PC2'yle iletişime geçebilmesi için yolu öğretmemiz gerekiyor
 ```
@@ -51,7 +66,7 @@ R2'ye giriyoruz
 ip route 192.168.1.0 (PC1'in local ağı) 255.255.255.0 10.0.0.1 (R1'nin R2'ye bakan bacağı)
 ```
 
-#### Vlan Oluşturma
+### Vlan Oluşturma
 ```
 Switch'e giriyoruz
 vlan 10 (vlan 10 oluşturur)
@@ -66,7 +81,7 @@ int ra fa0/1-10
 switchport access vlan 10 (fa0/1 ile fa0/10 arasındaki portları vlan 10'a atar)
 ```
 
-#### Cost Ayarlaması Yapmak
+### Cost Ayarlaması Yapmak
 
 Cost'u az olan yol daha uzun olsa bile o yoldan paket iletimi sağlanır
 
@@ -75,14 +90,14 @@ int se0/0/0
 ip ospf cost 100 (o portun cost'unu 100 olarak ayarlıyor)
 ```
 
-#### Router Sıfırlama 
+### Router Sıfırlama 
 ```
 write memory (confları kaydediyoruz)
 copy run start
 reload
 ```
 
-#### OSPF
+### OSPF
 OSPF yaptığımız zaman router'lara statik olarak yol göstermeye gerek duymayız(ip route...)
 ```
 en
@@ -91,7 +106,7 @@ router ospf 1
 network 192.168.2.0 0.0.0.255 area 0 (192.168.2.0 ile bir ağ var demektir eğer başka iç ağlar varsa onlarıda tek tek tanımlamamız lazım)
 ```
 
-#### EtherChannel
+### EtherChannel
 Ether Channel birden fazla fiziksel portu mantıksal olarak tek bir porta indirme işlemine denir. Özellikle bant genişliğini arttırarak yüksek hızlı bağlantılar sağlamak için kullanırız. Böylelikle birden fazla portu birleştirerek darboğaz sorununu önlemiş oluruz. Örneğin bizim 2 ader Switch'imiz var SW2 ve SW3. Etherchannel olması için karşılıklı 2'şer portun trunk olarak ayarlanması lazım.
 
 SW2'ye giriyoruz
@@ -117,7 +132,7 @@ int fa0/2
 channel-group 1 mode on
 ```
 
-#### Vlan'ı Trunk Yapmak
+### Vlan'ı Trunk Yapmak
 
 Switch'in bir portundan birden çok VLAN geçicekse o portu trunk moda almamız gerekir.
 
@@ -133,7 +148,7 @@ int fa0/1
 switchport mode trunk (fa0/1 modunu trunk yapar)
 ```
 
-#### Subınterface
+### Subınterface
 
 2 local ağ bir router üzerinden geçiceği zaman, 2 adet default gateway'e ihtiyaç duyar. Bu durumlarda subınterface yaparız ve vlan ağlarına özel default gateway oluştururuz.
 
