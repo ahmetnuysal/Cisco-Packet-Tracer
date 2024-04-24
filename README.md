@@ -15,8 +15,6 @@
 
 
 
-- PC'lere IP'yi statik olarak arayüzden verebiliriz
-- Komutun başına "no" ekleyerek iptal edebiliriz
 
 ### Show Komutları
 
@@ -65,6 +63,7 @@ ip route 192.168.2.0 (PC2'nin local ağı) 255.255.255.0 10.0.0.2 (R2'nin R1'e b
 R2'ye giriyoruz
 ip route 192.168.1.0 (PC1'in local ağı) 255.255.255.0 10.0.0.1 (R1'nin R2'ye bakan bacağı)
 ```
+- Komutun başına "no" ekleyerek iptal edebiliriz
 
 ### Vlan Oluşturma
 ```
