@@ -1,5 +1,6 @@
 # Cisco Packet Tracer
 
+- [Sıfırdan Switch Router Konf](#Sıfırdan-Switch-Router-Konf)
 - [Show Komutları](#Show-Komutları)
 - [Switchlere İsim Vermek](#Switchlere-İsim-Vermek)
 - [Router Aktif Etme](#Router-Aktif-Etme)
@@ -12,9 +13,42 @@
 - [Vlan'ı Trunk Yapmak](#Vlan'ı-Trunk-Yapmak)
 - [Subınterface](#Subınterface)
 
+## Sıfırdan Switch Router Konf
 
+* Yeni bir router ya da switch'i konfigürasyon yaparken mutlaka takip etmemiz gereken adımlar vardır.
+* ```#show memory``` ile cihazın donanımsal özellikleri görebiliriz, cihazda bir performans sorunu olursa buraya bakabiliriz.
+* ```#config register 0x2142``` komutu ile cihaz konf'larını sıfırlarız. Cihaz açıldıktan sonra konfigürasyon yapmadan önce tekrar silinmemesi için ```#config register 0x2102``` komutunu girmemiz gerekir.
 
+  * 1- Cihazımızı açıyoruz ve ilk "would you like to..." ile başlayan soruya no diyoruz 
 
+  * 2- ```#show memory``` ile cihazın donanımsal özellikleri görebiliriz, cihazda bir performans sorunu olursa buraya bakabiliriz.
+ 
+  * 3- Cihazımıza username tanımlamalıyız;
+    ```
+    #username ahmet secret 123 !ahmet kullanıcısı secret-şifre 123
+    #username ahmet password 123 !ahmet kullanıcısı şifre 123 
+    #username ahmet privillage <0-15> ! bir yetki seviyesi verir 0-min 15-max
+    #service password-encryption !password ile girilen şifreyi kriptolar
+    #write memory
+    ```
+  * 4- SSH için ayarlama yapıyoruz;
+    ```
+    #ip ssh version 2
+    #ip domain-name verify.com.tr
+    #crypto key generaye rsa
+    :1024
+  * 5- Vlan1 Ip ekliyoruz;
+    ```
+    #int Vlan1
+    #ip address 10.6.3.100 255.255.255.0
+    #no shutdown
+    ```
+  * 6- Line vty ayarlıyoruz;
+    ```
+    #line vty 0 4
+    #login local
+    #transport input ssh
+    ```
 
 ### Show Komutları
 
