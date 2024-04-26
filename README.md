@@ -26,7 +26,7 @@
  
   * 3- Cihazımıza username tanımlamalıyız;
     ```
-    #username ahmet secret 123 !ahmet kullanıcısı secret-şifre 123
+    #username ahmet secret 123 !ahmet kullanıcısı kriptolanmış-şifre 123
     #username ahmet password 123 !ahmet kullanıcısı şifre 123 
     #username ahmet privillage <0-15> ! bir yetki seviyesi verir 0-min 15-max
     #service password-encryption !password ile girilen şifreyi kriptolar
