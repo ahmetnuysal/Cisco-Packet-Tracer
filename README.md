@@ -18,6 +18,7 @@
 * Yeni bir router ya da switch'i konfigürasyon yaparken mutlaka takip etmemiz gereken adımlar vardır.
 * ```#show memory``` ile cihazın donanımsal özellikleri görebiliriz, cihazda bir performans sorunu olursa buraya bakabiliriz.
 * ```#config register 0x2142``` komutu ile cihaz konf'larını sıfırlarız. Cihaz açıldıktan sonra konfigürasyon yapmadan önce tekrar silinmemesi için ```#config register 0x2102``` komutunu girmemiz gerekir.
+* ```#show run``` ile yapılan konfigürasyonları görebiliriz.
 
   * 1- Cihazımızı açıyoruz ve ilk "would you like to..." ile başlayan soruya no diyoruz 
 
