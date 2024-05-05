@@ -54,7 +54,22 @@
     ```
 ## Switch Enable Resetleme
 
+* Önceden konfigürasyon yapılmış switch'in enable şifresi unutulduğunda switch'i resetlemek için yapmamız gereken işlemler vardır.
 
+ * 1- Switch'i power'dan çekerek kapatıyoruz.
+ * 2- Switch üzerinde bulunan "mode" tuşuna basarken, switch'in fişini takıyoruz ve switch'e bağlı PC'mizin ekranında "USB Console init, flash init" görünce parmağımızını çekiyoruz.
+ * 3- Komutları giriyoruz.
+```
+>flash-init
+>dir flash:
+>rename flash:config.text flash:config.old
+>boot
+```
+ * 4- Çıkan ekrana "no" diyoruz;
+```
+>rename flash: config.old flash:config.text
+>copyflash:config.text system:running-config
+```
 
 ### Show Komutları
 
