@@ -1,6 +1,7 @@
 # Cisco Packet Tracer
 
 - [Sıfırdan Switch Router Konf](#Sıfırdan-Switch-Router-Konf)
+- [Switch Enable Resetleme](#Switch-Enable-Resetleme)
 - [Show Komutları](#Show-Komutları)
 - [Switchlere İsim Vermek](#Switchlere-İsim-Vermek)
 - [Router Aktif Etme](#Router-Aktif-Etme)
@@ -51,6 +52,9 @@
     #login local
     #transport input ssh
     ```
+## Switch Enable Resetleme
+
+
 
 ### Show Komutları
 
