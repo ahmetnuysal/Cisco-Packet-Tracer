@@ -13,7 +13,7 @@
 - [EtherChannel](#EtherChannel)
 - [Vlan'ı Trunk Yapmak](#Vlan'ı-Trunk-Yapmak)
 - [Subınterface](#Subınterface)
-- [Tier 3 Demo Yapı](#Tier-3-Demo-Yapımı)
+- [Tier 3 Demo Yapı](#Tier-3-Demo-Yapı)
 
 ## Sıfırdan Switch Router Konf
 
