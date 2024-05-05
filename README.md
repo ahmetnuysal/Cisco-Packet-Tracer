@@ -13,6 +13,7 @@
 - [EtherChannel](#EtherChannel)
 - [Vlan'ı Trunk Yapmak](#Vlan'ı-Trunk-Yapmak)
 - [Subınterface](#Subınterface)
+- [Tier 3 Demo Yapı](#Tier-3-Demo-Yapımı)
 
 ## Sıfırdan Switch Router Konf
 
@@ -56,16 +57,19 @@
 
 * Önceden konfigürasyon yapılmış switch'in enable şifresi unutulduğunda switch'i resetlemek için yapmamız gereken işlemler vardır.
 
- * 1- Switch'i power'dan çekerek kapatıyoruz.
- * 2- Switch üzerinde bulunan "mode" tuşuna basarken, switch'in fişini takıyoruz ve switch'e bağlı PC'mizin ekranında "USB Console init, flash init" görünce parmağımızını çekiyoruz.
- * 3- Komutları giriyoruz.
+1- Switch'i power'dan çekerek kapatıyoruz.
+
+2- Switch üzerinde bulunan "mode" tuşuna basarken, switch'in fişini takıyoruz ve switch'e bağlı PC'mizin ekranında "USB Console init, flash init" görünce parmağımızını çekiyoruz.
+
+3- Komutları giriyoruz.
 ```
 >flash-init
 >dir flash:
 >rename flash:config.text flash:config.old
 >boot
 ```
- * 4- Çıkan ekrana "no" diyoruz;
+
+4- Çıkan ekrana "no" diyoruz;
 ```
 >rename flash: config.old flash:config.text
 >copyflash:config.text system:running-config
@@ -213,4 +217,50 @@ int Gi1/0.20 192.168.4.1 255.255.255.0 (Gi1/0 portunun Vlan 20 için default gat
 encapsulation dot1q
 end
 ```
-  
+
+### Tier 3 Demo Yapı
+
+1- Cihazları yerleştiriyoruz.
+
+2- Access switchlere vlan'ları oluşturuyoruz.
+```
+int f0/2 (PC'nin portları)
+switchport access vlan 5 (Vlan'a göre değişir)
+int vlan 5
+name A
+end
+```
+3- Distribution switch'lerin üzerinden hangi vlanlar geçicekse onları yazıyoruz. (Karşılıklı portları trunk yapmamız gerekiyor)
+```
+int g1/0/1
+switchport mode trunk
+switchport trunk allowed vlan 1,5,10 (o porttan sadece vlan1,vlan5 ve vlan10 geçsin)
+```
+4- Core switchler arasında etherchannel yapıyoruz. Bu sayede core switchler birbirinin ayakta olup olmadığını kontrol edebiliriz. C1 cihazının fa0/2 ve fa0/3 için yapıyoruz ve daha sonra C2 cihazı içinde yapmamız gerekiyor. 
+```
+conf t
+int port-channel 1
+switchport mode trunk
+int fa0/3
+channel-group  1 mode on
+int fa0/2
+channel-group 1 mode on
+```
+5- Core cihazlarımızda HSRP yapıyoruz. İki Core switch'imizde de bu işlemi yapıyoruz ve bu işlemi her vlan için yapmamız gerekiyor. Dist. ile Core1 arasında bir sorun olursa otomatik olarak Core2 yolu kullanılacak.
+```
+Core1 cihazımıza giriyoruz
+int vlan 5
+ip address 10.1.2.2 255.255.255.0 C1'imizin vlan5 için IP'si
+standby 1 ip 10.1.2.1 Aktif olan Core kendi "10.1.2.2"'yi değil bu IP'yi kullanıcak 
+
+Core2'ye giriyoruz
+int vlan 5
+ip address 10.1.2.3 255.255.255.0 C2'imizin vlan5 için IP'si
+standby 1 ip 10.1.2.1
+int vlan 10
+ip address 10.1.3.3 255.255.255.0
+standby 1 ip 10.1.3.1
+```
+
+
+
