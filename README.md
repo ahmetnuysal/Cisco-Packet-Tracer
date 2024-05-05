@@ -13,6 +13,9 @@
 - [EtherChannel](#EtherChannel)
 - [Vlan'ı Trunk Yapmak](#Vlan'ı-Trunk-Yapmak)
 - [Subınterface](#Subınterface)
+- [HSRP](#HSRP)
+- [GLBP](#GLBP)
+- [SDN](#SDN)
 - [Tier 3 Demo Yapı](#Tier-3-Demo-Yapı)
 
 ## Sıfırdan Switch Router Konf
@@ -218,9 +221,17 @@ encapsulation dot1q
 end
 ```
 
+### HSRP
+
+### GLBP
+
+### SDN
+
+SDN, yazılım tanımlı ağ demektir. Control layer ve data layer birbirinden ayrılmıştır. 
+
 ### Tier 3 Demo Yapı
 
-1- Cihazları yerleştiriyoruz.
+1- Cihazları yerleştiriyoruz. L3 switch ile Router farkı, L3 switch'lerde interface için bir vlan oluşturup o vlana bir IP ataması yaparız ve interface'i o vlana atarız. Router'larda ise interface bacağıan IP ataması yaparız
 
 2- Access switchlere vlan'ları oluşturuyoruz.
 ```
@@ -261,6 +272,16 @@ int vlan 10
 ip address 10.1.3.3 255.255.255.0
 standby 1 ip 10.1.3.1
 ```
+
+Yapıda kullanılan ve geçişi olan vlanları Dist. ve Core switch'de de oluşturmamız gerekiyor.
+
+6- Spannig-Tree oluşumunu engellemek için loop'daki tüm switchlere girip olan vlanlar için "pvst" aktif ediyoruz;
+```
+spanning-tree mode pvst
+spanning-tree vlan 1,10,20,30
+show spanning-tree summary
+```
+
 
 
 
