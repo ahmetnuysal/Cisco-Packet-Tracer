@@ -17,6 +17,10 @@
 - [GLBP](#GLBP)
 - [SDN](#SDN)
 - [Tier 3 Demo Yapı](#Tier-3-Demo-Yapı)
+- [NAT]
+ - [STATIK NAT](STATIK-NAT)
+ - [DINAMIK NAT](DINAMIK-NAT)
+ - [NAT PAT](NAT-PAT)
 
 ## Sıfırdan Switch Router Konf
 
@@ -281,6 +285,58 @@ spanning-tree mode pvst
 spanning-tree vlan 1,10,20,30
 show spanning-tree summary
 ```
+
+### NAT
+
+"Nat" kısaltması "Network Address Translation" (Ağ Adres Çevirisi) anlamına gelir. Bu, bir bilgisayar ağında bulunan cihazların yerel IP adreslerini (Local IP) genellikle internete erişim sağlamak için kullanılan küresel IP adreslere dönüştürme işlemidir. Nat, ağdaki cihazların dış dünyaya erişebilmesini sağlar, ancak aynı zamanda iç ağ yapılarını dış dünya tarafından görünmez hale getirir, bu da ağ güvenliğini artırır.
+
+### STATIK NAT
+
+Statik NAT (Static Network Address Translation), bir iç ağdaki bir özel IP adresini (genellikle yerel bir ağda kullanılan IP adresi) sabit bir genel IP adresine dönüştüren bir NAT türüdür. Statik NAT, her zaman belirli bir özel IP adresini belirli bir genel IP adresine eşler. Statik NAT, genellikle ağdaki sunucuların hizmetlerini dış dünyaya sunmak için kullanılır. Örneğin, bir web sunucusu veya e-posta sunucusu gibi. Statik NAT, iç ağdaki bir sunucunun dış IP adresiyle sürekli olarak ilişkilendirilmesini sağlar, böylece dış kullanıcılar bu sunuculara erişebilir. Statik NAT kurulduğunda, bir iç özel IP adresi ile bir dizi genel (dış) IP adresi eşleştirilir. Bu eşleşme, ağ yöneticisi tarafından yapılandırılır ve sabit kalır. Bu nedenle, Statik NAT, belirli servislere (web sunucusu, e-posta sunucusu vb.) erişim sağlamak için ideal bir çözümdür ve IP adresleri sabit kalmalıdır.
+
+```
+#ip nat inside source static <DönüştürülecekKaynakIP> <DönüşücekIP>
+#int gig0/0
+#ip nat inside (gig0/0 portunun iç ağda olduğunu belirtiyoruz)
+#int se0/0/0
+#ip nat outside (se0/0/0 portunun dış ağ olduğunu belirtiyoruz)
+```
+NAT Yaptığımız cihaza paket gelirken source IP adresi 172.16.4.100'ken NAT yapılmış cihazdan çıkış yapınca source IP adresi 80.210.12.3 olur. Statik NAT yapında daha sonra NAT tablosunu sıfırlayarak temizleyemeyiz.
+
+### DINAMIK NAT
+
+Dinamik NAT, iç ağdaki cihazların dış dünyaya erişim sağlamasına olanak tanırken, aynı zamanda iç ağdaki her cihazın sabit bir genel IP adresine ihtiyacı olmadığı durumlarda kullanışlıdır. Dinamik NAT işlemi genellikle bir NAT havuzunu kullanır. Bu havuz, dış IP adresleri içerir ve bu IP adresleri dış dünya ile iletişim kurmak isteyen iç cihazlar için dinamik olarak atanır. Bir iç cihaz dış dünyaya bir istek gönderdiğinde, NAT cihazı bir dış IP adresini dinamik olarak atanır ve bu cihazın iletişimini sağlar. İletişim sona erdiğinde, bu dış IP adresi tekrar havuza geri döner ve başka bir cihaza atanabilir. Dinamik NAT, birçok iç cihazın aynı anda dış dünya ile iletişim kurmasına izin verirken, aynı anda gereksiz miktarda genel IP adresi kullanımını önler. Bu, IP adreslerinin verimli kullanımını sağlar. Dinamik NAT ayrıca, iç ağdaki cihazların dış IP adresleriyle ilişkilendirilmesini dinamik olarak yönettiği için, ağ yöneticileri için yönetimi kolaylaştırır.
+
+```
+#access-list 1 permit 172.16.0.0 0.0.255.255 (172.16.x.x ağından gelen IP'leri dönüştür)
+#ip nat pool KAMPUS_POOL 80.210.12.3 80.210.12.6 (Gelen IP'leri bu aralıktaki IP'lerle eşleştir)
+#netmask 255.255.255.248 (total 4 IP adresi olduğu için /29 oluyor ve .248 olur)
+#ip nat inside source list 1 pool KAMPUS_POOL
+```
+
+```
+#access-list 1 permit 172.16.0.0 0.0.255.255 
+#ip nat inside source list 1 interface s0/0/0
+```
+
+### NAT PAT
+
+NAT PAT (Network Address Translation Port Address Translation), birden çok özel (yerel) IP adresini tek bir genel (küresel) IP adresiyle dış dünyaya erişim sağlamak için kullanan bir NAT (Network Address Translation) türüdür. Ayrıca Overloading olarak da adlandırılır. 
+
+PAT, IP adresleri ve port numaraları üzerinde dönüşüm yaparak çalışır. Özel IP adresleri, dış IP adresiyle birlikte kullanılan farklı port numaralarıyla birleştirilir. Bu sayede, aynı genel IP adresini paylaşan birden çok iç cihazın aynı anda dış ağa erişim sağlaması mümkün olur.
+
+Örneğin, bir evde veya küçük bir işletme ağında, birden fazla cihazın aynı anda internete erişim sağlaması gerekebilir. PAT, bu cihazların her birini farklı port numaralarıyla birleştirerek, tek bir küresel IP adresini kullanarak tüm cihazların internete erişimini sağlar.
+
+1024-65534 arasında port numarası alır, aynı anda yaklaşık 64bin cihaz internete çıkabilir. Belirli cihaz grubuna belirli port numarasını yazabiliyoruz. 
+
+```
+#access-list 1 permit 172.16.0.0 0.0.255.255
+#ip nat inside source list 1 interface se0/0/0 overload
+```
+
+
+
+
 
 
 
