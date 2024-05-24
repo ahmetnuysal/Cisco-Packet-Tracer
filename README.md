@@ -17,6 +17,7 @@
 - [GLBP](#GLBP)
 - [SDN](#SDN)
 - [Tier 3 Demo Yapı](#Tier-3-Demo-Yapı)
+- [Firewall](#Firewall)
 - [NAT](#NAT)
   - [STATIK NAT](STATIK-NAT)
   - [DINAMIK NAT](DINAMIK-NAT)
@@ -285,7 +286,16 @@ spanning-tree mode pvst
 spanning-tree vlan 1,10,20,30
 show spanning-tree summary
 ```
+### Firewall
 
+- 2 çeşit firewall vardır; Standart Firewall ve NextGen Firewall.
+- Üzerinden geçen trafiği inceler, kurallara göre geçişine izin verir ya da yasaklar.
+- L3 Gateway olarak kullanılabilir, ağ içindeki vlnarın bazı yerlere erişmelerini sağlar. Örnek: Satış biriminin Destek birimi belgelerine ulaşması gibi.
+- Firewall 3 parçaya böler; iç, dış ve DMZ bacağıdır. DMZ bacağını dışarıya servis verilen durumlarda kullanılır.
+- Mail sunucumuzu DMZ'ye koyabiliriz.
+- NextGen Firewall ile iç ağdan belirli sitelere girmelerini engelleyebiliriz. Örnek: Ağdaki PC'ler youtube'a giremesin.
+- İnternete çıkarken PC'lerin default gateway'i FW ayarlıyoruz.
+- IP Kameralar için default gateway'e girmeye gerek yok ama IP Kamera'lara kim bakmış diye kontrol ediceksek o zaman Firewall'ı IP Kamera'nın default gateway olarak ayarlamamız gerekiyor.
 ### NAT
 
 "Nat" kısaltması "Network Address Translation" (Ağ Adres Çevirisi) anlamına gelir. Bu, bir bilgisayar ağında bulunan cihazların yerel IP adreslerini (Local IP) genellikle internete erişim sağlamak için kullanılan küresel IP adreslere dönüştürme işlemidir. Nat, ağdaki cihazların dış dünyaya erişebilmesini sağlar, ancak aynı zamanda iç ağ yapılarını dış dünya tarafından görünmez hale getirir, bu da ağ güvenliğini artırır.
