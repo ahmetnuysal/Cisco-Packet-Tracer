@@ -163,7 +163,7 @@ reload
 ```
 
 ### OSPF
-OSPF yaptığımız zaman router'lara statik olarak yol göstermeye gerek duymayız(ip route...)
+OSPF yaptığımız zaman router ve L3 switch'lere statik olarak yol göstermeye gerek duymayız(ip route...)
 ```
 en
 conf t
