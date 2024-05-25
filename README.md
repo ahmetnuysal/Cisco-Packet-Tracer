@@ -18,6 +18,8 @@
 - [SDN](#SDN)
 - [Tier 3 Demo Yapı](#Tier-3-Demo-Yapı)
 - [Firewall](#Firewall)
+  - [Konfigürasyon](#Konfigürasyon)
+  - [ASA FW Managment Portundan Bağlama](#ASA-FW-Managment-Portundan-Bağlama)
 - [NAT](#NAT)
   - [STATIK NAT](STATIK-NAT)
   - [DINAMIK NAT](DINAMIK-NAT)
@@ -301,6 +303,49 @@ show spanning-tree summary
 - FW L7'ye kadar işlem yapabilir.
 - FW'a yazılmış kurallardan en üstte bulunan kuraldan geçiyorsa alttaki kurallar dikkate alınmaz.
 - FW ile internete çıkarken, cihazların default gateway'lerini FW IP adresini gireriz.
+
+### Konfigürasyon 
+
+Step1: Core cihaza vlanları oluşturuyoruz, eğer core cihazdaki vlanlarda ip var iptal ediyoruz. İptal ettikten sonra ```#show vlan```diyince vlanları görmemiz gerekiyor.
+
+```no int vlan 5,10``` komutu ile iptal ediyoruz
+
+Step2: Firewall'da channel-port oluşturuyoruz.
+
+```
+int channel-group 1
+ip address 10.1.1.20 (vlan 5 IP'si tüm vlanlar için yapıyoruz bunu)
+```
+
+Step3: Firewall'ın portlarını channel-group'a alıyoruz
+
+```
+int gi1/1
+channel-group mode on
+int gi1/2
+channel-group mode on
+```
+
+Step4: Channel-group'a isim veriyoruz
+
+```
+int channel-group 1
+nameif  pc1 (pc1, inside, outside vs olabilir)
+```
+
+Step5: PC0 (Vlan5) 10.1.1.20'yi (Vlan5 default gateway) pingliyoruz
+
+### ASA FW Managment Portundan Bağlama
+
+Step1: Kabloyu FW'un portundan bağlıyoruz
+```
+int man 1/1
+ip address 20.1.1.2
+```
+
+Step2: PC'mize giriyoruz ve default gateway'i "20.1.1.2" giriyoruz
+Step3: IP adresine 20.1.1.1 giriyoruz
+Step4: SSH ile ASA FW'ye bağlanmak için ```AAA authentication ssh concole local```komutunu giriyoruz ve artık SSH ile FW'ye bağlanabiliriz
 
 > Troubleshooting
 
