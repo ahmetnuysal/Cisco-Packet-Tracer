@@ -296,6 +296,15 @@ show spanning-tree summary
 - NextGen Firewall ile iç ağdan belirli sitelere girmelerini engelleyebiliriz. Örnek: Ağdaki PC'ler youtube'a giremesin.
 - İnternete çıkarken PC'lerin default gateway'i FW ayarlıyoruz.
 - IP Kameralar için default gateway'e girmeye gerek yok ama IP Kamera'lara kim bakmış diye kontrol ediceksek o zaman Firewall'ı IP Kamera'nın default gateway olarak ayarlamamız gerekiyor.
+- IPS: Dışardan içeriye sıkma işlemi olduğunda FW bunları drop edebilir.
+- DLP: Veri sızma önleme, daha önce işaretlenmiş dosyaların FW üzerinden dışarı çıkışı olduğunda FW bunları yakalar.
+- FW L7'ye kadar işlem yapabilir.
+- FW'a yazılmış kurallardan en üstte bulunan kuraldan geçiyorsa alttaki kurallar dikkate alınmaz.
+- FW ile internete çıkarken, cihazların default gateway'lerini FW IP adresini gireriz.
+
+> Troubleshooting
+
+- Mesela bir problemimiz var ama FW'den mi kaynaklanıyor bilemiyoruz. En üste any'den gelenler any'ye gitsin kuralı yazarız eğer çalışıyorsa sorun FW'den kaynaklıdır ama eğer çalışmıyorsa FW'den kaynaklı değildir.
 ### NAT
 
 "Nat" kısaltması "Network Address Translation" (Ağ Adres Çevirisi) anlamına gelir. Bu, bir bilgisayar ağında bulunan cihazların yerel IP adreslerini (Local IP) genellikle internete erişim sağlamak için kullanılan küresel IP adreslere dönüştürme işlemidir. Nat, ağdaki cihazların dış dünyaya erişebilmesini sağlar, ancak aynı zamanda iç ağ yapılarını dış dünya tarafından görünmez hale getirir, bu da ağ güvenliğini artırır.
