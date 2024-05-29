@@ -24,7 +24,8 @@
   - [STATIK NAT](STATIK-NAT)
   - [DINAMIK NAT](DINAMIK-NAT)
   - [NAT PAT](NAT-PAT)
-
+- [SDN](#SDN)
+  
 ## Sıfırdan Switch Router Konf
 
 * Yeni bir router ya da switch'i konfigürasyon yaparken mutlaka takip etmemiz gereken adımlar vardır.
@@ -398,10 +399,58 @@ PAT, IP adresleri ve port numaraları üzerinde dönüşüm yaparak çalışır.
 #ip nat inside source list 1 interface se0/0/0 overload
 ```
 
+### SDN 
+
+1. SDN Nedir?
+
+SDN, Software-Defined Networking'in (Yazılım Tanımlı Ağ) kısaltmasıdır. Basitçe söylemek gerekirse, bu teknolojiyle ağları daha esnek ve verimli bir şekilde yönetebiliriz. Geleneksel ağlar, her cihazın ayrı ayrı yönetildiği bir yapıya sahiptir. Ancak SDN'de, ağın kontrolü merkezi bir noktada toplanır ve ağ cihazlarına ne yapması gerektiği söylenir. Bu, ağ yönetimini daha basit ve güçlü bir hale getirir.
+
+2. Nasıl Çalışır?
+
+SDN'de, ağ trafiğini yöneten bir kontrol noktası vardır. Bu kontrol noktası, ağdaki her şeyi izler ve yönetir. Örneğin, bir bilgisayar internete bağlandığında, kontrol noktası bunu fark eder ve bilgisayarın verilerini doğru yere yönlendirir. Bu, ağın daha akıllı ve daha hızlı çalışmasını sağlar.
+
+3. Neden Önemlidir?
+
+SDN, ağların daha esnek, güçlü ve ölçeklenebilir olmasını sağlar. Bu da daha iyi bir internet deneyimi ve daha az ağ sorunu demektir. Ayrıca, SDN sayesinde ağ yönetimi daha basit hale gelir ve işletmeler için maliyetleri azaltır.
+
+4. Nasıl Uygulanır?
+
+SDN'yi uygulamak için, bir SDN kontrol noktası ve uyumlu ağ cihazlarına ihtiyacınız vardır. Kontrol noktası genellikle bir yazılım veya donanım olarak sunulur. Daha sonra, ağ cihazlarını kontrol noktasına bağlarsınız ve ağ politikalarını ayarlarsınız. Son olarak, REST API'ler aracılığıyla ağ hizmetlerini yönetmek için gerekli yazılımları oluşturabilir veya kullanabilirsiniz.
 
 
+Örnek: Şirket Kampüs Ağı İçin SDN Kullanımı
 
+Senaryo:
+Bir şirketin kampüs ağı, binlerce çalışanı, birden fazla bölümü ve bir dizi farklı cihazı kapsamaktadır. Bu ağ, ofis binalarını, veri merkezlerini ve farklı konumlardaki şubeleri içerebilir.
 
+SDN Kontrol Noktası:
+Şirketin kampüs ağı için bir SDN kontrol noktası, merkezi veri merkezinde bulunabilir. Bu kontrol noktası, tüm ağı izler ve yönetir. Ayrıca, farklı şubeler ve binalardaki alt SDN kontrol noktalarıyla iletişim kurabilir.
 
+Bölüm ve Departman İzolasyonu:
+SDN, farklı departmanların ve bölümlerin ağ trafiğini izole etmeye yardımcı olabilir. Örneğin, finans departmanının duyarlı verileri, diğer bölümlerin erişiminden daha sıkı bir şekilde izole edilebilir.
 
+Misafir Ağı Yönetimi:
+Şirket kampüsünde misafirler için ayrı bir ağ segmenti oluşturulabilir. SDN, bu misafir ağını otomatik olarak yönetebilir ve misafirlerin internet erişimini sağlayabilirken şirket içi kaynaklara erişimini sınırlayabilir.
 
+Kalite Yönetimi ve Hizmet Düzeyi (QoS):
+Özellikle sesli ve video konferans gibi önemli uygulamalar için bant genişliği tahsisini optimize etmek önemlidir. SDN, bu tür uygulamaların öncelikli trafiği olduğunu belirleyerek QoS politikalarını dinamik olarak uygulayabilir.
+
+Hızlı Hizmet Dağıtımı ve Esneklik:
+Yeni bir departman oluşturulduğunda veya yeni bir hizmet devreye alındığında, SDN bu değişikliklere hızlı bir şekilde uyum sağlayabilir. Yeni gereksinimlere göre ağ politikaları ve yapılandırmaları kolayca ayarlanabilir.
+
+Güvenlik ve Tehtit Tespiti:
+SDN, ağdaki anormal trafiği izleyerek ve analiz ederek tehditleri tespit edebilir. Örneğin, kötü amaçlı yazılımların veya ağ saldırılarının belirtilerini tespit edebilir ve buna göre önlemler alabilir.
+
+Bu örnek, bir şirketin kampüs ağı için SDN'nin nasıl kullanılabileceğini göstermektedir. SDN, karmaşık bir ağ yapısını daha yönetilebilir hale getirebilir, ağ performansını artırabilir ve güvenliği geliştirebilir. 
+
+OpenFlow; yazılım tanımlı ağların (SDN) uygulanmasını sağlayan bir iletişim protokolüdür. Bu protokol, ağdaki veri yollarını ve yönlendirme kararlarını merkezi bir kontrol cihazından alır ve yönetir. OpenFlow, geleneksel ağ donanımının ağ yönetimi ve kontrolünü merkezi bir yazılıma taşıyan bir yaklaşımı temsil eder.
+
+İşlevsel olarak, OpenFlow, ağ cihazlarının (genellikle switch'lerin) işlevlerini ikiye ayırır:
+
+Data Plane (Veri Yolu): Bu, gerçek veri iletiminin gerçekleştiği fiziksel ağ cihazlarını (switch'ler, router'lar) ifade eder. Veri Yolu, ağdaki paketlerin yönlendirilmesinden ve iletilmesinden sorumludur.
+
+Control Plane (Kontrol Yolu): Bu, ağdaki akış tablosunu yöneten ve veri yolunu kontrol eden merkezi bir kontrol cihazını ifade eder. Kontrol Yolu, OpenFlow kontrolörü tarafından temsil edilir ve ağdaki trafiği izler, analiz eder ve gerektiğinde akışları yönlendirir.
+
+OpenFlow protokolü, Kontrol Yolu ile Veri Yolu arasındaki iletişimi sağlar. Kontrol cihazı, ağdaki akışları tanımlar, ağ trafiğini analiz eder, politikaları uygular ve ağdaki değişiklikleri yönetir. Veri Yolu ise, Kontrol Yolu tarafından sağlanan yönlendirmeleri uygular ve ağ trafiğini yönlendirir.
+
+OpenFlow protokolü, ağdaki esneklik, ölçeklenebilirlik ve merkezi yönetim gibi SDN'nin temel prensiplerini sağlar. Bu sayede, ağ yönetimi ve kontrolü daha basit ve daha etkili hale gelir. Ayrıca, OpenFlow'un açık standardı, farklı üreticilerin cihazlarının birlikte çalışmasını sağlar, böylece tedarikçi bağımsız SDN çözümleri geliştirilmesine imkan tanır.
