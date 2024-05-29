@@ -417,7 +417,7 @@ SDN, ağların daha esnek, güçlü ve ölçeklenebilir olmasını sağlar. Bu d
 
 SDN'yi uygulamak için, bir SDN kontrol noktası ve uyumlu ağ cihazlarına ihtiyacınız vardır. Kontrol noktası genellikle bir yazılım veya donanım olarak sunulur. Daha sonra, ağ cihazlarını kontrol noktasına bağlarsınız ve ağ politikalarını ayarlarsınız. Son olarak, REST API'ler aracılığıyla ağ hizmetlerini yönetmek için gerekli yazılımları oluşturabilir veya kullanabilirsiniz.
 
-
+```
 Örnek: Şirket Kampüs Ağı İçin SDN Kullanımı
 
 Senaryo:
@@ -444,6 +444,7 @@ SDN, ağdaki anormal trafiği izleyerek ve analiz ederek tehditleri tespit edebi
 Bu örnek, bir şirketin kampüs ağı için SDN'nin nasıl kullanılabileceğini göstermektedir. SDN, karmaşık bir ağ yapısını daha yönetilebilir hale getirebilir, ağ performansını artırabilir ve güvenliği geliştirebilir. 
 
 OpenFlow; yazılım tanımlı ağların (SDN) uygulanmasını sağlayan bir iletişim protokolüdür. Bu protokol, ağdaki veri yollarını ve yönlendirme kararlarını merkezi bir kontrol cihazından alır ve yönetir. OpenFlow, geleneksel ağ donanımının ağ yönetimi ve kontrolünü merkezi bir yazılıma taşıyan bir yaklaşımı temsil eder.
+```
 
 İşlevsel olarak, OpenFlow, ağ cihazlarının (genellikle switch'lerin) işlevlerini ikiye ayırır:
 
