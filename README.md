@@ -24,6 +24,8 @@
   - [STATIK NAT](STATIK-NAT)
   - [DINAMIK NAT](DINAMIK-NAT)
   - [NAT PAT](NAT-PAT)
+  - [SOURCE NAT](#SOURCE-NAT)
+  - [DESTINATION NAT](#DESTINATION-NAT)
 - [SDN](#SDN)
   
 ## Sıfırdan Switch Router Konf
@@ -351,6 +353,7 @@ Step4: SSH ile ASA FW'ye bağlanmak için ```AAA authentication ssh concole loca
 > Troubleshooting
 
 - Mesela bir problemimiz var ama FW'den mi kaynaklanıyor bilemiyoruz. En üste any'den gelenler any'ye gitsin kuralı yazarız eğer çalışıyorsa sorun FW'den kaynaklıdır ama eğer çalışmıyorsa FW'den kaynaklı değildir.
+
 ### NAT
 
 "Nat" kısaltması "Network Address Translation" (Ağ Adres Çevirisi) anlamına gelir. Bu, bir bilgisayar ağında bulunan cihazların yerel IP adreslerini (Local IP) genellikle internete erişim sağlamak için kullanılan küresel IP adreslere dönüştürme işlemidir. Nat, ağdaki cihazların dış dünyaya erişebilmesini sağlar, ancak aynı zamanda iç ağ yapılarını dış dünya tarafından görünmez hale getirir, bu da ağ güvenliğini artırır.
@@ -392,12 +395,29 @@ PAT, IP adresleri ve port numaraları üzerinde dönüşüm yaparak çalışır.
 
 Örneğin, bir evde veya küçük bir işletme ağında, birden fazla cihazın aynı anda internete erişim sağlaması gerekebilir. PAT, bu cihazların her birini farklı port numaralarıyla birleştirerek, tek bir küresel IP adresini kullanarak tüm cihazların internete erişimini sağlar.
 
-1024-65534 arasında port numarası alır, aynı anda yaklaşık 64bin cihaz internete çıkabilir. Belirli cihaz grubuna belirli port numarasını yazabiliyoruz. 
+1024-65534 arasında port numarası alır, aynı anda yaklaşık "64bin" cihaz internete çıkabilir. Belirli cihaz grubuna belirli port numarasını yazabiliyoruz. 
 
 ```
 #access-list 1 permit 172.16.0.0 0.0.255.255
 #ip nat inside source list 1 interface se0/0/0 overload
 ```
+
+### SOURCE NAT
+
+Source NAT, kaynak IP adresini değiştirir, yani iç ağdaki bir cihazın IP adresini dış ağa çıkarken değiştirir.
+
+Genellikle iç ağdaki cihazların dış dünyaya bağlanırken, IP adreslerini gizlemek veya belirli bir IP aralığında dışa çıkmasını sağlamak için kullanılır.
+
+Bir iç ağda özel IP adreslerini kullanan cihazlar, S-NAT kullanılarak bu adreslerin dış dünyada erişilebilir olmasını sağlayabilirler.
+
+### DESTINATION NAT 
+
+Destination NAT, gelen paketlerin hedef IP adresini değiştirir.
+
+Genellikle dış dünyadan gelen trafiği iç ağdaki sunuculara yönlendirmek için kullanılır. Örneğin, bir web sunucusunun arkasındaki gerçek IP adresini saklamak ve gelen tüm istekleri bu sunucuya yönlendirmek için kullanılabilir.
+
+Bu iki NAT türü, ağ yönlendirme ve güvenlik politikalarını uygulamak için yaygın olarak kullanılır ve genellikle ağ yönlendirici veya güvenlik cihazlarında yapılandırılırlar.
+
 
 ### SDN 
 
