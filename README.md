@@ -96,6 +96,7 @@ show ip route: Router tablosunu gösterir
 show ip ospf int brief: Cost bilgisi verir
 show history: Geçmiş komutları listeler
 show interface: Arayüzleri gösterir
+show mac-address table: Mac Tablosunu gösterir.
 ```
 
 ### Switchlere İsim Vermek
